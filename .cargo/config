@@ -1,0 +1,2 @@
+[build]
+target = "x86_64-flandre_os.json"
