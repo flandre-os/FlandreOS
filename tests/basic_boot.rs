@@ -9,29 +9,24 @@ use core::panic::PanicInfo;
 use bootloader::entry_point;
 use bootloader::BootInfo;
 
-use flandre_os::hlt_loop;
-use flandre_os::println;
+use flandre_os::{hlt_loop, println, serial_print, serial_println};
 
 entry_point!(entry);
 
 fn entry(_boot_info: &'static BootInfo) -> ! {
-    println!("Hello World!");
-
-    #[cfg(test)]
     test_main();
 
     hlt_loop()
 }
 
-#[cfg(not(test))]
-#[panic_handler]
-fn panic(panic_info: &PanicInfo) -> ! {
-    println!("{}", panic_info);
-    hlt_loop()
-}
-
-#[cfg(test)]
 #[panic_handler]
 fn panic(panic_info: &PanicInfo) -> ! {
     flandre_os::test_panic_handler(panic_info)
+}
+
+#[test_case]
+fn test_basic_boot_println() {
+    serial_print!("test_basic_boot_println... ");
+    println!("test_basic_boot_println output");
+    serial_println!("[ok]");
 }
