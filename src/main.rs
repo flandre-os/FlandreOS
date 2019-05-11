@@ -4,27 +4,20 @@
 use bootloader::entry_point;
 use bootloader::BootInfo;
 use core::panic::PanicInfo;
+use flandre_os::hlt_loop;
 use flandre_os::println;
 
 entry_point!(entry);
 
-fn entry(boot_info: &'static BootInfo) -> ! {
-    println!("{:?}\n", boot_info);
-
+fn entry(_boot_info: &'static BootInfo) -> ! {
     let user_name = "lws";
     println!("Hello, {}!", user_name);
 
-    hlt();
+    hlt_loop()
 }
 
 #[panic_handler]
 fn panic(panic_info: &PanicInfo) -> ! {
     println!("{}", panic_info);
-    hlt();
-}
-
-fn hlt() -> ! {
-    x86_64::instructions::hlt();
-    #[allow(clippy::empty_loop)]
-    loop {}
+    hlt_loop()
 }
