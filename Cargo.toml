@@ -4,6 +4,10 @@ version = "0.0.1"
 authors = ["lws <chenkun_lws@126.com>"]
 edition = "2018"
 
+[[test]]
+name = "panic_handler"
+harness = false
+
 [dependencies]
 bootloader = "0.6"
 volatile = "0.2"
