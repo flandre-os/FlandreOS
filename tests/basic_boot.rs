@@ -4,9 +4,11 @@
 #![test_runner(flandre_os::test_runner)]
 #![reexport_test_harness_main = "test_main"]
 
+use core::panic::PanicInfo;
+
 use bootloader::entry_point;
 use bootloader::BootInfo;
-use core::panic::PanicInfo;
+
 use flandre_os::{hlt_loop, println, serial_print, serial_println};
 
 entry_point!(entry);

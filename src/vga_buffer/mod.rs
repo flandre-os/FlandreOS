@@ -1,9 +1,11 @@
+use core::fmt;
+
+use lazy_static::lazy_static;
+use spin::Mutex;
+
 use crate::vga_buffer::buffer::Buffer;
 use crate::vga_buffer::color::{Color, ColorCode};
 use crate::vga_buffer::writer::Writer;
-use core::fmt;
-use lazy_static::lazy_static;
-use spin::Mutex;
 
 mod buffer;
 mod color;

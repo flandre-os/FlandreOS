@@ -6,11 +6,12 @@
 
 use core::panic::PanicInfo;
 
-use crate::qemu::{exit_qemu, QemuExitCode};
 #[cfg(test)]
 use bootloader::entry_point;
 #[cfg(test)]
 use bootloader::BootInfo;
+
+use crate::qemu::{exit_qemu, QemuExitCode};
 
 pub mod qemu;
 pub mod serial;

@@ -1,5 +1,6 @@
-use crate::vga_buffer::color::ColorCode;
 use volatile::Volatile;
+
+use crate::vga_buffer::color::ColorCode;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[repr(C)]
