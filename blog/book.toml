@@ -1,0 +1,7 @@
+[book]
+authors = ["lws <chenkun_lws@126.com>"]
+multilingual = false
+src = "src"
+title = "The FlandreOS Book"
+[output.html]
+theme = "src/theme"
