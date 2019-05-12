@@ -11,10 +11,13 @@ mod buffer;
 mod color;
 mod writer;
 
+pub const DEFAULT_FOREGROUND: Color = Color::Green;
+pub const DEFAULT_BACKGROUND: Color = Color::Black;
+
 lazy_static! {
     static ref WRITER: Mutex<Writer> = Mutex::new(Writer {
         column_position: 0,
-        color_code: ColorCode::new(Color::Yellow, Color::Black),
+        color_code: ColorCode::new(DEFAULT_FOREGROUND, DEFAULT_BACKGROUND),
         buffer: unsafe { &mut *(0xb8000 as *mut Buffer) },
     });
 }
