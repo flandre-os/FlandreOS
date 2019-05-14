@@ -84,7 +84,7 @@ mod test {
         let s = "Some test string that fits on a single line";
         println!("{}", s);
         for (i, c) in s.chars().enumerate() {
-            let screen_char = WRITER.lock().buffer.chars[BUFFER_HEIGHT - 2][i].read();
+            let screen_char = WRITER.lock().read_buffer(BUFFER_HEIGHT - 2, i);
             assert_eq!(char::from(screen_char.ascii_character), c);
         }
 

@@ -10,23 +10,16 @@ use bootloader::entry_point;
 use bootloader::BootInfo;
 
 use flandre_os::hlt_loop;
-use flandre_os::{eprint, eprintln, print, println};
+use flandre_os::println;
 
 entry_point!(entry);
 
-#[allow(clippy::print_with_newline)]
 fn entry(_boot_info: &'static BootInfo) -> ! {
-    print!("Hello World!\n");
-    print!("New line test...\r\n");
-    let name = "lws";
-    println!("Hello {}!", name);
+    let mut writer = flandre_os::vga_buffer::WRITER.lock();
+    writer.clear_screen();
+    drop(writer);
 
-    for i in 1..=20 {
-        println!("{}", i);
-    }
-
-    eprintln!("FlandreOS is a toy operating system for personal learning operating system related knowledge.");
-    eprint!("Please enjoy it!");
+    println!("kernel loaded...");
 
     #[cfg(test)]
     test_main();
