@@ -3,23 +3,15 @@ use core::fmt;
 use lazy_static::lazy_static;
 use spin::Mutex;
 
-use crate::vga_buffer::buffer::Buffer;
 use crate::vga_buffer::color::{Color, ColorCode};
 use crate::vga_buffer::writer::Writer;
 
-mod buffer;
-mod color;
-mod writer;
-
-pub const DEFAULT_FOREGROUND: Color = Color::Green;
-pub const DEFAULT_BACKGROUND: Color = Color::Black;
+pub mod buffer;
+pub mod color;
+pub mod writer;
 
 lazy_static! {
-    static ref WRITER: Mutex<Writer> = Mutex::new(Writer {
-        column_position: 0,
-        color_code: ColorCode::new(DEFAULT_FOREGROUND, DEFAULT_BACKGROUND),
-        buffer: unsafe { &mut *(0xb8000 as *mut Buffer) },
-    });
+    pub static ref WRITER: Mutex<Writer> = Mutex::new(Writer::default());
 }
 
 #[macro_export]
@@ -33,10 +25,32 @@ macro_rules! println {
     ($($arg:tt)*) => ($crate::print!("{}\n", format_args!($($arg)*)));
 }
 
+#[macro_export]
+macro_rules! eprint {
+    ($($arg:tt)*) => ($crate::vga_buffer::_eprint(format_args!($($arg)*)));
+}
+
+#[macro_export]
+macro_rules! eprintln {
+    () => ($crate::eprint!("\n"));
+    ($($arg:tt)*) => ($crate::eprint!("{}\n", format_args!($($arg)*)));
+}
+
 #[doc(hidden)]
 pub fn _print(args: fmt::Arguments) {
     use core::fmt::Write;
     WRITER.lock().write_fmt(args).unwrap();
+}
+
+#[doc(hidden)]
+pub fn _eprint(args: fmt::Arguments) {
+    use core::fmt::Write;
+    let mut writer = WRITER.lock();
+    let color = writer.color();
+    let error_color = ColorCode::new(Color::Red, Color::Black);
+    writer.set_color(error_color);
+    writer.write_fmt(args).unwrap();
+    writer.set_color(color);
 }
 
 mod test {

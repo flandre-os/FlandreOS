@@ -1,3 +1,6 @@
+pub const DEFAULT_FOREGROUND: Color = Color::Green;
+pub const DEFAULT_BACKGROUND: Color = Color::Black;
+
 #[allow(dead_code)]
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[repr(u8)]
@@ -27,5 +30,11 @@ pub struct ColorCode(u8);
 impl ColorCode {
     pub fn new(foreground: Color, background: Color) -> ColorCode {
         ColorCode((background as u8) << 4 | (foreground as u8))
+    }
+}
+
+impl Default for ColorCode {
+    fn default() -> Self {
+        Self::new(DEFAULT_FOREGROUND, DEFAULT_BACKGROUND)
     }
 }
