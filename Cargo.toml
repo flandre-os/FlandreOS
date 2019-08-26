@@ -16,7 +16,7 @@ x86_64 = "0.7"
 uart_16550 = "0.2"
 
 [dependencies.lazy_static]
-version = "1.3"
+version = "1.4"
 features = ["spin_no_std"]
 
 [package.metadata.bootimage]
